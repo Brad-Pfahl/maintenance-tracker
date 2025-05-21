@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add Vehicle{% endblock %}
+
+{% block body %}
+    <h1 class="text-2xl font-semibold mb-4">Edit Maintenance Record</h1>
+
+    {{ form_start(form) }}
+
+    <div class="space-y-4">
+        {% for field in form %}
+            <div>
+                {{ form_label(field, null, { label_attr: { class: 'block text-sm font-medium text-gray-700' } }) }}
+                {{ form_widget(field, { attr: { class: 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50' } }) }}
+                {{ form_errors(field) }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="mt-6">
+        <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+            Save Maintenance Record
+        </button>
+    </div>
+
+    {{ form_end(form) }}
+{% endblock %}

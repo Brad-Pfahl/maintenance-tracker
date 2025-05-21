@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add Maintenance Record{% endblock %}
+
+{% block body %}
+    <h1 class="text-2xl font-semibold mb-6">Add Maintenance Record</h1>
+
+    <a href="{{ path('app_maintenance_record_index') }}" class="mb-4 inline-block text-blue-600 hover:underline">
+        ← Back to records
+    </a>
+
+    {{ form_start(form) }}
+
+    <div class="space-y-4" x-data="{ showOther: false }" x-init="
+    showOther = $refs.typeField.value === 'Other';
+    $refs.typeField.addEventListener('change', (e) => {
+      showOther = e.target.value === 'Other';
+    });
+  ">
+
+        <!-- Type -->
+        <div>
+            {{ form_label(form.type, null, { label_attr: { class: 'block text-sm font-medium text-gray-700' } }) }}
+            {{ form_widget(form.type, {
+                attr: {
+                    class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500",
+                    "x-ref": "typeField"
+                }
+            }) }}
+            {{ form_errors(form.type) }}
+        </div>
+
+        <!-- Other Type (conditionally visible) -->
+        <div x-show="showOther" x-transition>
+            {{ form_label(form.otherType, null, { label_attr: { class: 'block text-sm font-medium text-gray-700' } }) }}
+            {{ form_widget(form.otherType, {
+                attr: {
+                    class: 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500'
+                }
+            }) }}
+            {{ form_errors(form.otherType) }}
+        </div>
+
+        <!-- Date -->
+        <div>
+            {{ form_label(form.date, null, { label_attr: { class: 'block text-sm font-medium text-gray-700' } }) }}
+            {{ form_widget(form.date, {
+                attr: {
+                    class: 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500'
+                }
+            }) }}
+            {{ form_errors(form.date) }}
+        </div>
+
+        <!-- Mileage -->
+        <div>
+            {{ form_label(form.mileage, null, { label_attr: { class: 'block text-sm font-medium text-gray-700' } }) }}
+            {{ form_widget(form.mileage, {
+                attr: {
+                    class: 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500'
+                }
+            }) }}
+            {{ form_errors(form.mileage) }}
+        </div>
+
+        <!-- Vehicle -->
+        <div>
+            {{ form_label(form.vehicle, null, { label_attr: { class: 'block text-sm font-medium text-gray-700' } }) }}
+            {{ form_widget(form.vehicle, {
+                attr: {
+                    class: 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500'
+                }
+            }) }}
+            {{ form_errors(form.vehicle) }}
+        </div>
+
+        <!-- Notes -->
+        <div>
+            {{ form_label(form.notes, null, { label_attr: { class: 'block text-sm font-medium text-gray-700' } }) }}
+            {{ form_widget(form.notes, {
+                attr: {
+                    class: 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500'
+                }
+            }) }}
+            {{ form_errors(form.notes) }}
+        </div>
+    </div>
+
+    <div class="mt-6">
+        <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+            Save Record
+        </button>
+    </div>
+
+    {{ form_end(form) }}
+{% endblock %}
