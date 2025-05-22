@@ -6,24 +6,24 @@
     <link rel="stylesheet" href="{{ asset('build/app.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 </head>
-<body class="bg-gray-200 text-gray-900 min-h-screen flex flex-col">
+<body class="bg-background text-text font-sans">
 
 <!-- Navbar -->
 <nav class="bg-white shadow p-4">
     <div class="container mx-auto flex justify-between items-center">
-        <a href="{{ path('app_home') }}" class="text-xl font-semibold text-blue-600">MaintenanceTracker</a>
+        <a href="{{ path('app_home') }}" class="text-xl font-semibold text-accent">MaintenanceTracker</a>
 
         <div class="space-x-4">
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                <a href="{{ path('app_logout') }}" class="text-gray-700 hover:text-blue-600">Logout</a>
-                <a href="{{ path('app_dashboard') }}" class="text-gray-700 hover:text-blue-600">Dashboard</a>
+                <a href="{{ path('app_logout') }}" class="text-muted hover:text-accent">Logout</a>
+                <a href="{{ path('app_dashboard') }}" class="text-muted hover:text-accent">Dashboard</a>
 
                 {% if is_granted('ROLE_ADMIN') %}
                     <a href="{{ path('admin_dashboard') }}" class="text-red-600 font-semibold">Admin</a>
                 {% endif %}
             {% else %}
-                <a href="{{ path('app_login') }}" class="text-gray-700 hover:text-blue-600">Login</a>
-                <a href="{{ path('app_register') }}" class="text-gray-700 hover:text-blue-600">Register</a>
+                <a href="{{ path('app_login') }}" class="text-muted hover:text-accent">Login</a>
+                <a href="{{ path('app_register') }}" class="text-muted hover:text-accent">Register</a>
             {% endif %}
         </div>
     </div>
@@ -33,7 +33,7 @@
 <div class="container mx-auto mt-4">
     {% for label, messages in app.flashes %}
         {% for message in messages %}
-            <div class="bg-blue-100 border border-blue-300 text-blue-800 px-4 py-2 rounded mb-3">
+            <div class="bg-accent border border-blue-300 text-accent px-4 py-2 rounded mb-3">
                 {{ message }}
             </div>
         {% endfor %}
@@ -46,7 +46,7 @@
 </main>
 
 <!-- Footer -->
-<footer class="bg-white text-center text-sm text-gray-500 py-4 mt-8 border-t">
+<footer class="bg-white text-center text-sm text-muted py-4 mt-8 border-t">
     &copy; {{ "now"|date("Y") }} Vehicle Maintenance Tracker
 </footer>
 

@@ -6,7 +6,7 @@
     <h1 class="text-2xl font-bold mb-6">Login</h1>
 
     {% if error %}
-        <div class="bg-red-100 text-red-700 px-4 py-2 rounded mb-4">
+        <div class="bg-error-light text-error px-4 py-2 rounded mb-4">
             {{ error.messageKey|trans(error.messageData, 'security') }}
         </div>
     {% endif %}
@@ -26,7 +26,7 @@
 
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+        <button type="submit" class="bg-accent text-white px-4 py-2 rounded hover:bg-accent-dark">
             Login
         </button>
     </form>
