@@ -1,22 +1,11 @@
 services:
   - type: web
     name: maintenance-tracker
-    plan: free
+    plan: starter
     buildCommand: |
       composer install --no-dev --optimize-autoloader --no-interaction
       composer require symfony/runtime
       npm install
       npx encore production
     startCommand: apache2-foreground
-    envVars:
-      - key: APP_ENV
-        value: prod
-      - key: APP_DEBUG
-        value: 0
-      - key: APP_SECRET
-        value: your-actual-secret-here
-      - key: DATABASE_URL
-        fromDatabase:
-          name: your-postgres-db-name
-          property: connectionString
     runtime: docker
