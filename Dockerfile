@@ -20,8 +20,8 @@ COPY . .
 # Install Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Set permissions (optional: customize to your app)
-RUN chown -R www-data:www-data /var/www/html/var
+# Set permissions
+RUN mkdir -p /var/www/html/var && chown -R www-data:www-data /var/www/html/var
 
 # Install PHP deps
 RUN composer install --no-dev --optimize-autoloader
