@@ -5,9 +5,15 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 final class HomeController extends AbstractController
 {
+    #[Route('/', name: 'app_root_redirect')]
+    public function rootRedirect(): RedirectResponse
+    {
+        return $this->redirectToRoute('app_home'); // or 'app_dashboard' etc.
+    }
     #[Route('/home', name: 'app_home')]
     public function index(): Response
     {

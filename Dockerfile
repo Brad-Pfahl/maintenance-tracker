@@ -27,7 +27,7 @@ COPY . .
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader --no-scripts --no-interaction
+RUN composer install --no-dev --optimize-autoloader --no-interaction
 
 # Build frontend assets
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
