@@ -8,6 +8,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class MaintenanceRecordForm extends AbstractType
 {
@@ -17,7 +18,10 @@ class MaintenanceRecordForm extends AbstractType
             ->add('type')
             ->add('otherType', null, [
                 'required' => false,])
-            ->add('date')
+            ->add('date', DateType::class, [
+                'widget' => 'single_text',
+                'label' => 'Date of Service',
+                'html5' => true,])
             ->add('mileage')
             ->add('notes')
             ->add('vehicle', EntityType::class, [

@@ -5,6 +5,11 @@
 {% block body %}
     <h1 class="text-2xl font-semibold mb-6">Dashboard</h1>
 
+    <div class="space-x-4">
+        <a href="{{ path('app_vehicle_new') }}" class="btn btn-primary">Add Vehicle</a>
+        <a href="{{ path('app_maintenance_record_new') }}" class="btn btn-secondary">Add Maintenance</a>
+    </div>
+
     <!-- Filter Form -->
     <form method="get" class="mb-6 grid grid-cols-1 md:grid-cols-4 gap-4">
         <div>
