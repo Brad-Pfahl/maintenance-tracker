@@ -10,16 +10,15 @@ RUN apt-get update && apt-get install -y \
 # Enable Apache modules
 RUN a2enmod rewrite
 
+# Tell Apache to serve from /public
+ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
+
+# Replace default Apache config to point to the correct root
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/000-default.conf \
+    && sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf
+
 # Set working directory
 WORKDIR /var/www/html
-
-# Set the correct document root
-ENV APACHE_DOCUMENT_ROOT /var/www/html/public
-
-# Update Apache site config to use /public
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf && \
-    sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf
-
 # Copy project files
 COPY . .
 
