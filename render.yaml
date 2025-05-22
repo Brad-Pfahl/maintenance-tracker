@@ -2,23 +2,21 @@ services:
   - type: web
     name: maintenance-tracker
     plan: free
-    autoDeploy: true
-    buildCommand: ""
-    startCommand: ""
+    buildCommand: |
+      composer install --no-dev --optimize-autoloader --no-interaction
+      composer require symfony/runtime
+      npm install
+      npx encore production
+    startCommand: apache2-foreground
     envVars:
       - key: APP_ENV
         value: prod
       - key: APP_DEBUG
-        value: "0"
+        value: 0
       - key: APP_SECRET
-        generateValue: true
+        value: your-actual-secret-here
       - key: DATABASE_URL
-        value: >-
-          mysql://{{ env.DB_USER }}:{{ env.DB_PASSWORD }}@{{ env.DB_HOST }}:{{ env.DB_PORT }}/{{ env.DB_NAME }}
+        fromDatabase:
+          name: your-postgres-db-name
+          property: connectionString
     runtime: docker
-databases:
-  - name: maintenance-db
-    plan: free
-    databaseName: app
-    user: app
-
