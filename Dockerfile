@@ -1,41 +1,32 @@
-# Base image
 FROM php:8.3-apache
 
-# Required PHP extensions
+# Install PHP dependencies
 RUN apt-get update && apt-get install -y \
-    git unzip curl libicu-dev libpq-dev libzip-dev libonig-dev libxml2-dev \
-    libpng-dev libjpeg-dev libfreetype6-dev libxslt-dev mariadb-client \
+    git unzip curl zip libicu-dev libzip-dev libpng-dev libjpeg-dev \
+    libfreetype6-dev libonig-dev libxml2-dev mariadb-client \
     && docker-php-ext-install pdo pdo_mysql intl zip opcache
 
-# Enable Apache modules
+# Enable Apache rewrite module
 RUN a2enmod rewrite
 
-# Tell Apache to serve from /public
-ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
+# Set working dir OUTSIDE web root
+WORKDIR /app
 
-# Replace default Apache config to point to the correct root
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/000-default.conf \
-    && sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf
+# Copy Symfony project (everything)
+COPY . /app
 
-# Set working directory
-WORKDIR /var/www/html
-# Copy project files
-COPY . .
+# Symlink public to Apache root
+RUN rm -rf /var/www/html && ln -s /app/public /var/www/html
 
-# Install Composer
+# Copy Composer from official image
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader --no-interaction
+# Install PHP deps (skip scripts)
+RUN composer install --no-dev --optimize-autoloader --no-scripts --no-interaction
 
-# Build frontend assets
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
-    apt-get install -y nodejs && \
-    npm install && \
-    npx encore production
+# (Optional) Asset build
+# RUN npm install && npx encore production
 
-# Expose port 80
 EXPOSE 80
 
-# Start Apache
 CMD ["apache2-foreground"]
