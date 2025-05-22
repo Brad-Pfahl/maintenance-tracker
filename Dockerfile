@@ -4,7 +4,8 @@ FROM php:8.3-apache
 RUN apt-get update && apt-get install -y \
     git unzip curl zip libicu-dev libzip-dev libpng-dev libjpeg-dev \
     libfreetype6-dev libonig-dev libxml2-dev mariadb-client \
-    && docker-php-ext-install pdo pdo_mysql intl zip opcache
+    && docker-php-ext-install pdo pdo_mysql pdo_pgsql pgsql intl zip opcache
+
 
 # Enable Apache rewrite module
 RUN a2enmod rewrite
